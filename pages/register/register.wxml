@@ -7,7 +7,7 @@
             <!--账号-->
             <view class="input-view">
                 <image class="name-img" src="../resources/images/username.png"></image>
-                <label class="login-label">账号</label>
+                <label class="login-label">账号：</label>
                 <input name="username" class="input-text" placeholder="请输入账号"/>
             </view>
             
@@ -16,7 +16,7 @@
             <!--密码-->
             <view class="input-view">
                 <image class="key-img" src="../resources/images/password.png"></image>
-                <label class="login-label">密码</label>
+                <label class="login-label">密码：</label>
                 <input name="password" class="input-text" password="true" placeholder="请输入密码"/>
             </view>
 
