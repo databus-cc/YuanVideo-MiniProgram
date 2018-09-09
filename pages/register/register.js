@@ -49,6 +49,8 @@ Page({
               })
             }
             else {
+              app.userInfo = res.data.data;
+              console.log("userinfo: " + app.userInfo.toString())
               wx.showToast({
                 title: '注册成功',
                 duration: 3000
