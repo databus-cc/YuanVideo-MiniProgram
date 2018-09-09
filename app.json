@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/register/register",
     "pages/index/index"
   ],
   "window":{
@@ -7,5 +8,6 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "元视频",
     "navigationBarTextStyle":"black"
-  }
+  },
+  "debug": true
 }
