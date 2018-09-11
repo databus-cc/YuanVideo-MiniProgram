@@ -17,6 +17,9 @@ Page({
     }
 
     var serverUrl = app.serverUrl + "/login/";
+    wx.showLoading({
+      title: '登录中...',
+    })
     wx.request({
       url: serverUrl,
       method: "POST",
@@ -29,6 +32,7 @@ Page({
       },
       success: function(res) {
         console.log("login response: " + res.data);
+        wx.hideLoading();
         if (res.statusCode != 200) {
           wx.showToast({
             title: 'HTTP错误：' + res.statusCode,
@@ -47,11 +51,19 @@ Page({
             console.log("Login Done.");
             wx.showToast({
               title: '登录成功',
+            });
+            wx.navigateTo({
+              url: '../mine/mine',
             })
           }
         }
       }
     })
+  },
 
+  goRegister: function() {
+    wx.navigateTo({
+      url: '../register/register',
+    })
   }
 })

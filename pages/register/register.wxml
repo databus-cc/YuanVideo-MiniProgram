@@ -26,7 +26,7 @@
             </view>
 
             <view>
-                <button class="backto-login-btn" type="warn" bindtap="goLoginPage">返回登录</button>
+                <button class="backto-login-btn" type="warn" bindtap="goLogin">返回登录</button>
             </view>
         </form>
     </view>

@@ -1,0 +1,14 @@
+<view>
+<view class='container'>
+  <image src='../resources/images/noneface.png' class='face' bindtap='changeFace'/>
+  <label class='nickname'>nickname</label>
+  <button size='mini' class='primary' bindtap='uploadVideo'>上传视频</button>
+  <button size='mini' class='logout' type='' bindtap='logout'>注销</button>
+
+  <view class='container-row'>
+    <label class='info-items'>100 粉丝</label>
+    <label class='info-items'>100 关注</label>
+    <label class='info-items'>100 获赞</label>
+  </view>
+</view>
+</view>
