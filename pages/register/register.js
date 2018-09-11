@@ -20,6 +20,9 @@ Page({
     else {
       var serverUrl = app.serverUrl + "/register/";
       console.log("POST " + serverUrl);
+      wx.showLoading({
+        title: '请等待...',
+      });
       wx.request({
         url: serverUrl,
         method: "POST",
@@ -31,6 +34,7 @@ Page({
           'content-type': 'application/json'
         },
         success: function(res) {
+          wx.hideLoading();
           var httpStatus = res.statusCode;
           if (httpStatus != 200) {
             wx.showToast({
@@ -49,6 +53,8 @@ Page({
               })
             }
             else {
+              app.userInfo = res.data.data;
+              console.log("userinfo: " + app.userInfo.toString())
               wx.showToast({
                 title: '注册成功',
                 duration: 3000
@@ -59,6 +65,12 @@ Page({
         }
       })
     }
+  },
 
+  goLogin: function () {
+    wx.navigateTo({
+      url: '../login/login',
+    })
   }
+
 })

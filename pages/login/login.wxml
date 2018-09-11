@@ -3,7 +3,7 @@
         <image class="login-img" src="../resources/images/dsp.jpg"></image>
     </view>
     <view class="login-from">
-        <form bindsubmit='doRegist'>
+        <form bindsubmit='doLogin'>
             <!--账号-->
             <view class="input-view">
                 <image class="name-img" src="../resources/images/username.png"></image>
@@ -22,11 +22,11 @@
 
             <!--按钮-->
             <view>
-                <button class="login-btn" type="primary" form-type='submit'>注册</button>
+                <button class="login-btn" type="primary" form-type='submit'>登录</button>
             </view>
 
             <view>
-                <button class="backto-login-btn" type="warn" bindtap="goLogin">返回登录</button>
+                <button class="backto-login-btn" type="warn" bindtap="goRegister">点击注册</button>
             </view>
         </form>
     </view>
