@@ -26,7 +26,6 @@ Page({
       success: function(res) {
         console.log(res.data);
         wx.hideLoading();
-
         if (res.statusCode != 200) {
           wx.showToast({
             icon: 'none',
@@ -49,6 +48,59 @@ Page({
           })
         }
       }
+    })
+  },
+
+  changeFace: function() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function(res) {
+        var tempFilePaths = res.tempFilePaths;
+        console.log(tempFilePaths);
+        // upload image
+        wx.showLoading({
+          title: '正在上传',
+        })
+        wx.uploadFile({
+          url: app.serverUrl + "/users/uploadFace?userId=" + app.userInfo.id,
+          filePath: tempFilePaths[0],
+          method: "POST",
+          name: 'file',
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function(res) {
+            wx.hideLoading();
+            console.log("Upload face response: " + res);
+            if (res.statusCode != 200) {
+              wx.showToast({
+                title: '上传失败，HTTP状态码错误-' + res.statusCode,
+                icon: 'none',
+                duration: 3000
+              })
+            }
+            else {
+              var data = JSON.parse(res.data)
+              if (data.status != 200) {
+                wx.showToast({
+                  title: '上传失败-' + data.errMsg,
+                  icon: 'none',
+                  duration: 3000
+                })
+              }
+              else {
+                wx.showToast({
+                  title: '上传成功',
+                  icon: 'success',
+                  duration: 3000
+                })
+              }
+            }
+          },
+        })
+      },
     })
   }
 })
