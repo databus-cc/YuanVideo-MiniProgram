@@ -98,6 +98,41 @@ Page({
     })
   },
 
+  uploadVideo: function() {
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 60,
+      camera: 'back',
+      success(res) {
+        console.log(res)
+        var duration =  res.duration;
+        var height = res.height;
+        var size = res.size;
+        var tempFilePath = res.tempFilePath;
+        var thumbTempFilePath = res.thumbTempFilePath;
+        var width = res.width;
+        // 超过30分钟
+        if (duration > 30 * 60) {
+          wx.showToast({
+            title: '视频长度不能超过30分钟',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+        else if (duration < 1) {
+          wx.showToast({
+            title: '视频时长不足一秒，请重新选择',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+        else {
+          // 打开BGM页面
+        }
+      }
+    })
+  },
+  
   changeFace: function() {
     var me = this;
     wx.chooseImage({
