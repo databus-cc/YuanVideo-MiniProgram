@@ -6,8 +6,54 @@ Page({
    * 页面的初始数据
    */
   data: {
-    faceUrl: "../resources/images/nonface.png",
+    faceUrl: "../resources/images/noneface.png",
     isMe: true
+  },
+
+  onLoad: function () {
+    var me = this;
+    var serverUrl = app.serverUrl + "/users/" + app.userInfo.id;
+    wx.request({
+      url: serverUrl,
+      method: "GET",
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log("user info get: " + res.data);
+        wx.hideLoading();
+        if (res.statusCode != 200) {
+          wx.showToast({
+            title: 'HTTP错误：' + res.statusCode,
+            icon: 'none'
+          })
+        }
+        else {
+          if (res.data.status != 200) {
+            wx.showToast({
+              title: res.data.errMsg,
+              icon: 'none'
+            })
+          }
+          else {
+            var userInfo = res.data.data;
+            console.log("获取成功." + userInfo);
+            var imageUrl = '../resources/images/noneface.png';
+            if (userInfo.faceImage != null && userInfo.faceImage != '' && userInfo.faceImage != undefined) {
+              imageUrl = app.serverUrl + "/" + app.userInfo.id + "/face/" + userInfo.faceImage;
+            }
+
+            me.setData({
+              faceUrl: imageUrl,
+              fansCounts: userInfo.fansCounts,
+              followCounts: userInfo.followCounts,
+              receiveLikeCounts: userInfo.receiveLikeCounts ,
+              nickName: userInfo.nickname
+            })
+          }
+        }
+      }
+    })
   },
 
   logout: function() {
@@ -23,6 +69,7 @@ Page({
       header: {
         'content-type': 'application/json'
       },
+      dataType: 'json',
       success: function(res) {
         console.log(res.data);
         wx.hideLoading();
@@ -52,6 +99,7 @@ Page({
   },
 
   changeFace: function() {
+    var me = this;
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
@@ -73,7 +121,7 @@ Page({
           },
           success: function(res) {
             wx.hideLoading();
-            console.log("Upload face response: " + res);
+            console.log("Upload face response: " + res.toString());
             if (res.statusCode != 200) {
               wx.showToast({
                 title: '上传失败，HTTP状态码错误-' + res.statusCode,
@@ -91,6 +139,11 @@ Page({
                 })
               }
               else {
+                var imageUrl = app.serverUrl + "/" + app.userInfo.id + "/face/" + data.data;
+                console.log("imageUrl=" + imageUrl)
+                me.setData({
+                  faceUrl: imageUrl
+                });
                 wx.showToast({
                   title: '上传成功',
                   icon: 'success',
