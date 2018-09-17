@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/chooseBgm/chooseBgm",
     "pages/login/login",
+    "pages/chooseBgm/chooseBgm",
     "pages/mine/mine",
     "pages/register/register",
     "pages/index/index"

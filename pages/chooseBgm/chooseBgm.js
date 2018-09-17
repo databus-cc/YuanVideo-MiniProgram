@@ -7,18 +7,19 @@ Page({
    */
   data: {
     serverUrl: app.serverUrl,
-    bgmList: [],
-    // poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
-    name: '此时此刻',
-    author: '许巍',
-    // src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
+    bgmList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options);
     var me = this;
+    me.setData(
+      {
+        videoParams : options
+      });
     wx.showLoading({
       title: '请等待...',
     });
@@ -102,6 +103,78 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+
+  },
+
+  onUpload: function(e) {
+    var me = this;
+    var bgmId = e.detail.value.bgmId;
+    var desc = e.detail.value.desc;
+    console.log("bgmId: " + bgmId);
+    console.log("desc: " + desc);
+    console.log(me.data.videoParams);
+    var duration = me.data.videoParams.duration;
+    var height = me.data.videoParams.height;
+    var size = me.data.videoParams.size;
+    var tempFilePath = me.data.videoParams.tempFilePath;
+    var thumbTempFilePath = me.data.videoParams.thumbTempFilePath;
+    var width = me.data.videoParams.width;
+
+    var form = {
+      userId: app.userInfo.id,
+      bgmId: bgmId,
+      desc: desc,
+      duration: duration,
+      height: height,
+      size: size,
+      width: width
+    };
+    console.log("form: ");
+    console.log(form);
+    // 上传短视频
+    wx.uploadFile({
+      url: app.serverUrl + "/videos/",
+      formData: form,
+      filePath: tempFilePath,
+      method: "POST",
+      name: 'file',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        wx.hideLoading();
+        console.log("Upload face response: " + res.toString());
+        if (res.statusCode != 200) {
+          wx.showToast({
+            title: '上传失败，HTTP状态码错误-' + res.statusCode,
+            icon: 'none',
+            duration: 3000
+          })
+        }
+        else {
+          var data = JSON.parse(res.data)
+          if (data.status != 200) {
+            wx.showToast({
+              title: '上传失败-' + data.errMsg,
+              icon: 'none',
+              duration: 3000
+            })
+          }
+          else {
+            var imageUrl = app.serverUrl + "/" + app.userInfo.id + "/face/" + data.data;
+            console.log("imageUrl=" + imageUrl)
+            me.setData({
+              faceUrl: imageUrl
+            });
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 3000
+            })
+          }
+        }
+      }
+    })
 
   }
 })

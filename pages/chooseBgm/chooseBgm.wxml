@@ -3,16 +3,18 @@
 <view>
 <!-- audio.wxml -->
   <!-- TODO: 如何依次只能播放一个 -->
-  <radio-group name="bgmId">
-    <block wx:for="{{bgmList}}">
-      <view class='container'>
-        <audio name='{{item.name}}xxdsafdgewqrdasfw' author='{{item.author}}' src='{{serverUrl}}/bgm/{{item.path}}' id='myAudio' style='width:300px' controls loop></audio>
-        <radio style='margin-top:20px;' value=''></radio>
-      </view>
-    </block>
-  </radio-group>
+ 
 
-  <form bindsubmit='upload'>
+  <form bindsubmit='onUpload'>
+   <radio-group name="bgmId">
+      <block wx:for="{{bgmList}}">
+        <view class='container'>
+          <audio name='{{item.name}}' author='{{item.author}}' src='{{serverUrl}}/bgm/{{item.path}}' id='myAudio' style='width:300px' controls loop></audio>
+          <radio style='margin-top:20px;' value='{{item.id}}'></radio>
+        </view>
+      </block>
+     </radio-group>
+
       <view class="inputView">
           <label class="loginLabel">视频描述：</label>
           <input name="desc" class="inputText" placeholder="说点什么吧" />

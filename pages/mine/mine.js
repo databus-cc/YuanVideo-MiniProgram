@@ -128,6 +128,14 @@ Page({
         }
         else {
           // 打开BGM页面
+          wx.navigateTo({
+            url: '../chooseBgm/chooseBgm?duration=' + duration 
+            + '&height=' + height
+            + '&size=' + size
+            + '&width=' + width
+            + '&tempFilePath=' + tempFilePath
+            + '&thumbTempFilePath=' + thumbTempFilePath,
+          })
         }
       }
     })
