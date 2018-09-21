@@ -132,6 +132,8 @@ Page({
     console.log("form: ");
     console.log(form);
     // 上传短视频
+    var succ = false;
+    var videoId = "";
     wx.uploadFile({
       url: app.serverUrl + "/videos/",
       formData: form,
@@ -143,7 +145,8 @@ Page({
       },
       success: function (res) {
         wx.hideLoading();
-        console.log("Upload face response: " + res.toString());
+        console.log("Upload video response: ");
+        console.log(res);
         if (res.statusCode != 200) {
           wx.showToast({
             title: '上传失败，HTTP状态码错误-' + res.statusCode,
@@ -161,20 +164,64 @@ Page({
             })
           }
           else {
-            var imageUrl = app.serverUrl + "/" + app.userInfo.id + "/face/" + data.data;
-            console.log("imageUrl=" + imageUrl)
-            me.setData({
-              faceUrl: imageUrl
-            });
+            videoId = data.data;
+            succ = true;
             wx.showToast({
               title: '上传成功',
               icon: 'success',
               duration: 3000
+            });
+
+            wx.showToast({
+              title: '视频封面上传中',
+            });
+
+            wx.uploadFile({
+              url: app.serverUrl + "/videos/uploadCover",
+              filePath: thumbTempFilePath,
+              name: 'file',
+              formData: {
+                userId: app.userInfo.id,
+                videoId: videoId
+              },
+              method: "POST",
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                wx.hideLoading();
+                console.log("upload cover respnse");
+                console.log(res);
+                if (res.statusCode != 200) {
+                  wx.showToast({
+                    title: '上传封面失败, HTTP状态码 - ' + res.statusCode,
+                    icon: 'none',
+                    duration: 2000
+                  });
+                }
+                else {
+                  var data = JSON.parse(res.data);
+                  if (data.status != 200) {
+                    wx.showToast({
+                      title: '上传封面失败-' + data.errMsg,
+                      icon: 'none',
+                      duration: 2000
+                    });
+                  }
+                  else {
+                    wx.showToast({
+                      title: '封面上传成功',
+                      duration: 2000
+                    })
+                  }
+                }
+                
+              }
             })
           }
         }
       }
-    })
+    });
 
   }
 })
