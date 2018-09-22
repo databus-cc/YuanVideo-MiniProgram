@@ -1,16 +1,16 @@
 <!--index.wxml-->
 
-  <!-- <view wx:for="{{videoList}}" class="item-container">   -->
+  <view wx:for="{{videoList}}" class="item-container">  
 
      <view style='width:{{screenWidth}}px;height:210px;' class='back-img'> 
         <image src="http://localhost:8080/26ecdc14-b43a-11e8-b545-b2bc650c608d/video/cover/wx27e33d2be61d1e6e.o6zAJsyIJzxw0t2NhGNdUDOVfj5k.4bGU1x6EN7tBb07db6d4da744226a030af42a36548f9.jpg" style='width:{{screenWidth}}px;height:210px;' mode="aspectFit" bindtap='showVideoInfo' data-arrindex='{{index}}'></image>
      </view> 
     <view class="desc">
         <view class="faceName">
-            <image class='myface' src="http://localhost:8080/26ecdc14-b43a-11e8-b545-b2bc650c608d/face/wx27e33d2be61d1e6e.o6zAJsyIJzxw0t2NhGNdUDOVfj5k.1o1zrxZnSvFv21854c0e74d1d89eb45d5fb57fc2356c.png"></image>
-            <view class="nickname">元芳先生</view>
+            <image class='myface' src='{{serverUrl}}{{item.faceImage}}'></image>
+            <view class="nickname">{{item.nickName}}</view>
         </view>
     </view>
 
 
-  <!-- </view>   -->
+  </view>  
