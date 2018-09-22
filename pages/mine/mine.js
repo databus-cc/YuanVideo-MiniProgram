@@ -40,7 +40,7 @@ Page({
             console.log("获取成功." + userInfo);
             var imageUrl = '../resources/images/noneface.png';
             if (userInfo.faceImage != null && userInfo.faceImage != '' && userInfo.faceImage != undefined) {
-              imageUrl = app.serverUrl + "/" + app.userInfo.id + "/face/" + userInfo.faceImage;
+              imageUrl = app.serverUrl + "/face/" + userInfo.faceImage;
             }
 
             me.setData({
@@ -182,7 +182,7 @@ Page({
                 })
               }
               else {
-                var imageUrl = app.serverUrl + "/" + app.userInfo.id + "/face/" + data.data;
+                var imageUrl = app.serverUrl + "/face/" + data.data;
                 console.log("imageUrl=" + imageUrl)
                 me.setData({
                   faceUrl: imageUrl
