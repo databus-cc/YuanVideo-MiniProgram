@@ -1,0 +1,2 @@
+<!--pages/searchVideo/serachVideo.wxml-->
+<include src="../wxSearchView/wxSearchView.wxml" />
