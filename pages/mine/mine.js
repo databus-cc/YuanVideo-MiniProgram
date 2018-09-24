@@ -12,7 +12,7 @@ Page({
 
   onLoad: function () {
     var me = this;
-    var serverUrl = app.serverUrl + "/users/" + app.userInfo.id;
+    var serverUrl = app.serverUrl + "/users/" + app.getGlobalUserInfo().id;
     wx.request({
       url: serverUrl,
       method: "GET",
@@ -58,7 +58,7 @@ Page({
 
   logout: function() {
     console.log("Logging out... ");
-    var user = app.userInfo;
+    var user = app.getGlobalUserInfo();
     wx.showLoading({
       title: '正在注销...',
     });
@@ -89,7 +89,7 @@ Page({
           })
         }
         else if (res.statusCode == 200 && res.data.status == 200) {
-          app.userInfo = null;
+          wx.removeStorageSync('userInfo');
           wx.navigateTo({
             url: '../login/login',
           })
@@ -155,7 +155,7 @@ Page({
           title: '正在上传',
         })
         wx.uploadFile({
-          url: app.serverUrl + "/users/uploadFace?userId=" + app.userInfo.id,
+          url: app.serverUrl + "/users/uploadFace?userId=" + app.getGlobalUserInfo().id,
           filePath: tempFilePaths[0],
           method: "POST",
           name: 'file',

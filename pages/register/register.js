@@ -53,8 +53,7 @@ Page({
               })
             }
             else {
-              app.userInfo = res.data.data;
-              console.log("userinfo: " + app.userInfo.toString())
+              app.setGlobalUserInfo(res.data.data);
               wx.showToast({
                 title: '注册成功',
                 duration: 3000

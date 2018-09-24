@@ -121,7 +121,7 @@ Page({
     var width = me.data.videoParams.width;
 
     var form = {
-      userId: app.userInfo.id,
+      userId: app.getGlobalUserInfo().id,
       bgmId: bgmId,
       desc: desc,
       duration: duration,
@@ -181,7 +181,7 @@ Page({
               filePath: thumbTempFilePath,
               name: 'file',
               formData: {
-                userId: app.userInfo.id,
+                userId: app.getGlobalUserInfo().id,
                 videoId: videoId
               },
               method: "POST",

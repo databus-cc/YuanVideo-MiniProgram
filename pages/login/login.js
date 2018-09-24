@@ -47,7 +47,7 @@ Page({
             })
           }
           else {
-            app.userInfo = res.data.data;
+            app.setGlobalUserInfo(res.data.data);
             console.log("Login Done.");
             wx.showToast({
               title: '登录成功',
